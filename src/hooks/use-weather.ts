@@ -1,0 +1,36 @@
+import type { Coordinates } from "@/api/types";
+import { weatherApi } from "@/api/weather";
+import { useQuery } from "@tanstack/react-query";
+
+export const WEATHER_KEYS = {
+  weather: (coordinates: Coordinates) => ["weather", coordinates] as const,
+  forecast: (coordinates: Coordinates) => ["forecast", coordinates] as const,
+  location: (coordinates: Coordinates) =>
+    ["reverse-geocode", coordinates] as const,
+} as const;
+
+export function useWeatherQuery(coordinates: Coordinates | null) {
+  return useQuery({
+    queryKey: WEATHER_KEYS.weather(coordinates ?? { lat: 0, lon: 0 }),
+    queryFn: () =>
+      coordinates ? weatherApi.getCurrentWeather(coordinates) : null,
+    enabled: !!coordinates,
+  });
+}
+
+export function useForecastQuery(coordinates: Coordinates | null) {
+  return useQuery({
+    queryKey: WEATHER_KEYS.forecast(coordinates ?? { lat: 0, lon: 0 }),
+    queryFn: () => (coordinates ? weatherApi.getForecast(coordinates) : null),
+    enabled: !!coordinates,
+  });
+}
+
+export function useReverseGeocodeQuery(coordinates: Coordinates | null) {
+  return useQuery({
+    queryKey: WEATHER_KEYS.location(coordinates ?? { lat: 0, lon: 0 }),
+    queryFn: () =>
+      coordinates ? weatherApi.reverseGeocode(coordinates) : null,
+    enabled: !!coordinates,
+  });
+}
