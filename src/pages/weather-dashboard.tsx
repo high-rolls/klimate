@@ -1,3 +1,4 @@
+import CurrentWeather from "@/components/current-weather";
 import WeatherSkeleton from "@/components/loading-skeleton";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -65,7 +66,7 @@ const WeatherDashboard = () => {
     );
   }
 
-  const locationName = locationQuery.data?.[0].name;
+  const locationName = locationQuery.data?.[0];
 
   if (weatherQuery.error || forecastQuery.error) {
     return (
@@ -91,7 +92,7 @@ const WeatherDashboard = () => {
     <div className="space-y-4">
       {/* Favorite Cities */}
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold tracking-tight">{locationName}</h1>
+        <h1 className="text-xl font-bold tracking-tight">My City</h1>
         <Button
           variant="outline"
           size="icon"
@@ -102,6 +103,20 @@ const WeatherDashboard = () => {
             className={weatherQuery.isFetching ? "animate-spin" : ""}
           />
         </Button>
+      </div>
+
+      <div className="grid gap-6">
+        <div>
+          <CurrentWeather
+            data={weatherQuery.data}
+            locationName={locationName}
+          />
+          {/* hourly temperature */}
+        </div>
+        <div>
+          {/* details */}
+          {/* forecast */}
+        </div>
       </div>
     </div>
   );
