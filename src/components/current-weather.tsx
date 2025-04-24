@@ -1,6 +1,7 @@
 import type { GeocodingResponse, WeatherData } from "@/api/types";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowDown, ArrowUp, Droplets, Wind } from "lucide-react";
+import { Droplets, Wind } from "lucide-react";
+import TemperatureMinMax from "./temperature-min-max";
 
 interface CurrentWeatherProps {
   data: WeatherData;
@@ -46,16 +47,11 @@ const CurrentWeather = ({ data, locationName }: CurrentWeatherProps) => {
                 <p className="text-sm font-medium text-muted-foreground">
                   Feels like {formatTemp(feels_like)}
                 </p>
-                <div className="flex gap-2 text-sm font-medium">
-                  <span className="flex items-center gap-1 text-blue-500">
-                    <ArrowDown className="h-3 w-3" />
-                    {formatTemp(temp_min)}
-                  </span>
-                  <span className="flex items-center gap-1 text-red-500">
-                    <ArrowUp className="h-3 w-3" />
-                    {formatTemp(temp_max)}
-                  </span>
-                </div>
+                <TemperatureMinMax
+                  tempMin={temp_min}
+                  tempMax={temp_max}
+                  className="flex gap-2 text-sm font-medium"
+                />
               </div>
             </div>
 
