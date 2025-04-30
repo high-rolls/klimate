@@ -22,7 +22,7 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
+      <BrowserRouter basename="/klimate/">
         <ThemeProvider defaultTheme="dark">
           <Layout>
             <Routes>
