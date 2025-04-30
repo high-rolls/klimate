@@ -13,6 +13,9 @@ jobs:
         uses: oven-sh/setup-bun@v2
 
       - name: Install and Build 🔧
+        env:
+          VITE_OPENWEATHER_API_KEY: ${{ secrets.VITE_OPENWEATHER_API_KEY }}
+          VITE_BASE_URL: /klimate/
         run: |
           bun install
           VITE_BASE_URL=/klimate/ bun run build
@@ -20,4 +23,5 @@ jobs:
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
+          branch: gh-pages
           folder: dist
